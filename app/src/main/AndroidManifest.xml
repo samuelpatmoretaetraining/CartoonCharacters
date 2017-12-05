@@ -10,27 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".CharListActivity"
-            android:label="@string/title_char_list"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".CharDetailActivity"
-            android:label="@string/title_char_detail"
-            android:parentActivityName=".CharListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.muelpatmore.cartooncharacters.CharListActivity" />
-        </activity>
-        <activity
             android:name=".ItemListActivity"
-            android:label="@string/title_item_list"
+            android:label="@string/title_char_list"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
