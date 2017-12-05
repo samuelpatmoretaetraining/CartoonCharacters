@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">CartoonCharacters</string>
     <string name="title_character_detail">Character Detail</string>
+    <string name="title_char_list">Chars</string>
+    <string name="title_char_detail">Char Detail</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
 </resources>
