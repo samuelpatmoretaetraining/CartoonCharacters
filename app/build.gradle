@@ -16,6 +16,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildToolsVersion '27.0.1'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     flavorDimensions "mhdp"
     productFlavors {
@@ -23,15 +28,16 @@ android {
             dimension "mhdp"
             applicationId "com.muelpatmore.cartooncharacters.simpsons"
             buildConfigField 'String', 'app_name', '"Simpsons Characters"'
-            buildConfigField 'String', 'database_term', '"simpsons"'
-
+            buildConfigField 'String', 'api_base', '"https://api.duckduckgo.com/"'
+            buildConfigField 'String', 'api_query', '"?q=simpsons+characters&format=json"'
             buildConfigField 'String', 'version_name', '"0.1.0"'
         }
         futurama {
             dimension "mhdp"
             applicationId "com.muelpatmore.cartooncharacters.futurama"
             buildConfigField 'String', 'app_name', '"Futurama Characters"'
-            buildConfigField 'String', 'database_name', '"futurama"'
+            buildConfigField 'String', 'api_base', '"https://api.duckduckgo.com/"'
+            buildConfigField 'String', 'api_query', '"?q=futurama+characters&format=json"'
             buildConfigField 'String', 'version_name', '"0.1.0"'
         }
     }
@@ -47,13 +53,21 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    /// Retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
 
-    // JSON Parsing
-    compile 'com.google.code.gson:gson:2.6.1'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    // ANetworking
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:0.12.2'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    compile 'com.squareup.okhttp3:okhttp:3.7.0'
 
     // recyclerview
     compile 'com.android.support:recyclerview-v7:26.1.0'
+
+    // Messaging
+    compile 'org.greenrobot:eventbus:3.1.1'
+
 }
