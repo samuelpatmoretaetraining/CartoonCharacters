@@ -3,6 +3,7 @@ package com.muelpatmore.cartooncharacters.data.network;
 import android.util.Log;
 
 import com.muelpatmore.cartooncharacters.BuildConfig;
+import com.muelpatmore.cartooncharacters.data.event_bus.CharacterDetailsReady;
 import com.muelpatmore.cartooncharacters.data.event_bus.CharacterListReady;
 import com.muelpatmore.cartooncharacters.data.network.models.CharacterListModel;
 import com.muelpatmore.cartooncharacters.data.network.models.CharacterModel;
@@ -55,11 +56,41 @@ public class APIManager {
                 .flatMapIterable(x -> x)
                 .map(x -> x.getText())
                 .toList()
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.computation())
                 .subscribe(names -> {
                         EventBus.getDefault().post(
                                 new CharacterListReady(
                                         new ArrayList<>(names)));}
                 , throwable -> throwable.printStackTrace());
+    }
+
+    public void getCharacterDetails(String name) {
+        compositeDisposable.add(
+                request.getCharacterList()
+                        .observeOn(schedulerProvider.ui())
+                        .subscribeOn(schedulerProvider.io())
+                        .subscribe(characterList -> {
+                            cropCharacter(characterList, name);
+                        }, throwable -> throwable.printStackTrace())
+        );
+    }
+
+
+
+    public void cropCharacter(CharacterListModel characterListModel, String name) {
+        io.reactivex.Observable.just(characterListModel)
+                .map(x -> x.getCharacterModels())
+                .flatMapIterable(x -> x)
+                .filter( x -> {
+                    return x.getText().startsWith(name);
+                })
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.computation())
+                .subscribe(character -> {
+                            EventBus.getDefault().post(
+                                    new CharacterDetailsReady(character));}
+                        , throwable -> throwable.printStackTrace());
     }
 
 //    public void getCharacterList() {

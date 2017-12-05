@@ -9,6 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.muelpatmore.cartooncharacters.data.DataManager;
+import com.muelpatmore.cartooncharacters.data.event_bus.CharacterDetailsReady;
+import com.muelpatmore.cartooncharacters.data.event_bus.CharacterListReady;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 /**
  * A fragment representing a single Item detail screen.
  * This fragment is either contained in a {@link ItemListActivity}
@@ -16,15 +24,11 @@ import android.widget.TextView;
  * on handsets.
  */
 public class ItemDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
-    public static final String ARG_ITEM_ID = "item_id";
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
+    private DataManager dataManager;
+
+    private TextView item_detail;
+    public static final String ARG_ITEM_ID = "item_id";
     private String name;
 
     /**
@@ -32,6 +36,8 @@ public class ItemDetailFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public ItemDetailFragment() {
+        dataManager = new DataManager();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -48,20 +54,36 @@ public class ItemDetailFragment extends Fragment {
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
                 appBarLayout.setTitle(name);
+                dataManager.getCharacterDetails(name);
             }
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(CharacterDetailsReady event) {
+        item_detail.setText(event.character.getText());
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.item_detail, container, false);
 
+        item_detail = (TextView) rootView.findViewById(R.id.item_detail);
+
         // Show the dummy content as text in a TextView.
         if (name != null) {
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(name);
+            item_detail.setText(name);
         }
 
         return rootView;
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 }

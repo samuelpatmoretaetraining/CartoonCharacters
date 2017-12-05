@@ -17,4 +17,8 @@ public class DataManager {
     public void getCharacterList() {
         apiManager.getCharacterList();
     }
+
+    public void getCharacterDetails(String name) {
+        apiManager.getCharacterDetails(name);
+    }
 }
