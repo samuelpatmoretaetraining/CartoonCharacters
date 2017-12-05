@@ -114,10 +114,8 @@ public class ItemListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mIdView.setText(mValues.get(position));
-//            holder.mContentView.setText(mValues.get(position).content);
-
-            holder.itemView.setTag(mValues.get(position));
+            String itemText = mValues.get(position);
+            holder.mIdView.setText(itemText.substring(0, itemText.indexOf("-")));
             holder.itemView.setOnClickListener(mOnClickListener);
         }
 
