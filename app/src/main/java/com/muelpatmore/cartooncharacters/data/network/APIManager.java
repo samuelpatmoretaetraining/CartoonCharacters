@@ -41,11 +41,16 @@ public class APIManager {
         compositeDisposable.add(
                 request.getCharacterList()
                     .map(x -> x.getCharacterModels())
+                    .flatMapIterable(x -> x)
+                    .map(x -> x.getText())
+                    .toList()
                     .observeOn(schedulerProvider.ui())
                     .subscribeOn(schedulerProvider.io())
                     .subscribe(characterList -> {
-                        ArrayList<CharacterModel> characterArrayList = new ArrayList<>(characterList);
-                        Log.i(TAG, characterArrayList.size() + " " + BuildConfig.app_name + " found.");
+                        ArrayList<String> characterArrayList = new ArrayList<>(characterList);
+                        for (String s : characterArrayList) {
+                            Log.i(TAG, s);
+                        }
                         EventBus.getDefault().post(new CharacterListReady(characterArrayList));
                     }, throwable -> throwable.printStackTrace())
         );

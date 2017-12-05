@@ -9,9 +9,9 @@ import java.util.ArrayList;
  */
 
 public class CharacterListReady {
-    public ArrayList<CharacterModel> characterList;
+    public ArrayList<String> characterList;
 
-    public CharacterListReady(ArrayList<CharacterModel> characterList) {
+    public CharacterListReady(ArrayList<String> characterList) {
         this.characterList = characterList;
     }
 }

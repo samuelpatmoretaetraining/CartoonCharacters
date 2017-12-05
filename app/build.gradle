@@ -27,7 +27,7 @@ android {
         simpsons {
             dimension "mhdp"
             applicationId "com.muelpatmore.cartooncharacters.simpsons"
-            buildConfigField 'String', 'app_name', '"Simpsons Characters"'
+            buildConfigField 'String', 'application_name', '"Simpsons Characters"'
             buildConfigField 'String', 'api_base', '"https://api.duckduckgo.com/"'
             buildConfigField 'String', 'api_query', '"?q=simpsons+characters&format=json"'
             buildConfigField 'String', 'version_name', '"0.1.0"'
@@ -35,7 +35,7 @@ android {
         futurama {
             dimension "mhdp"
             applicationId "com.muelpatmore.cartooncharacters.futurama"
-            buildConfigField 'String', 'app_name', '"Futurama Characters"'
+            buildConfigField 'String', 'application_name', '"Futurama Characters"'
             buildConfigField 'String', 'api_base', '"https://api.duckduckgo.com/"'
             buildConfigField 'String', 'api_query', '"?q=futurama+characters&format=json"'
             buildConfigField 'String', 'version_name', '"0.1.0"'
