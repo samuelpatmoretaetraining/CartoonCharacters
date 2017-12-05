@@ -6,8 +6,7 @@
     android:name="com.muelpatmore.cartooncharacters.ItemListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:background="#eeeeee"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.muelpatmore.cartooncharacters.ItemListActivity"
     tools:listitem="@layout/item_list_content" />

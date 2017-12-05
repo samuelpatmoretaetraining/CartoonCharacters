@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.EventLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.muelpatmore.cartooncharacters.data.DataManager;
 import com.muelpatmore.cartooncharacters.data.event_bus.CharacterListReady;
+import com.muelpatmore.cartooncharacters.data.event_bus.CharacterSelected;
 import com.muelpatmore.cartooncharacters.data.network.models.CharacterModel;
 import com.muelpatmore.cartooncharacters.dummy.DummyContent;
 
@@ -94,6 +96,28 @@ public class ItemListActivity extends AppCompatActivity {
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                TextView textView = (TextView)view.findViewById(R.id.tvName);
+                String item = (String) textView.getText();
+                if(item != null) {
+                    if (mTwoPane) {
+                        Bundle arguments = new Bundle();
+                        arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item);
+                        ItemDetailFragment fragment = new ItemDetailFragment();
+                        fragment.setArguments(arguments);
+                        mParentActivity.getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.item_detail_container, fragment)
+                                .commit();
+                    } else {
+                        Context context = view.getContext();
+                        Intent intent = new Intent(context, ItemDetailActivity.class);
+                        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item);
+
+                        context.startActivity(intent);
+                        EventBus.getDefault().post(new CharacterSelected(item));
+                    }
+                } else {
+                    Toast.makeText(mParentActivity, "Name not loaded from view.", Toast.LENGTH_SHORT).show();
+                }
             }
         };
 
@@ -115,8 +139,8 @@ public class ItemListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             String itemText = mValues.get(position);
-            holder.mIdView.setText(itemText.substring(0, itemText.indexOf("-")));
-            holder.itemView.setOnClickListener(mOnClickListener);
+            holder.tvName.setText(itemText.substring(0, itemText.indexOf("-")));
+            holder.view.setOnClickListener(mOnClickListener);
         }
 
         @Override
@@ -125,13 +149,13 @@ public class ItemListActivity extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            final TextView mIdView;
-            final TextView mContentView;
+            final View view;
+            final TextView tvName;
 
             ViewHolder(View view) {
                 super(view);
-                mIdView = (TextView) view.findViewById(R.id.id_text);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                this.view = view;
+                tvName = (TextView) view.findViewById(R.id.tvName);
             }
         }
     }

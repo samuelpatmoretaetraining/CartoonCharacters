@@ -2,6 +2,7 @@ package com.muelpatmore.cartooncharacters;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -9,10 +10,16 @@ import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.muelpatmore.cartooncharacters.data.DataManager;
+import com.muelpatmore.cartooncharacters.data.event_bus.CharacterListReady;
+import com.muelpatmore.cartooncharacters.data.event_bus.CharacterSelected;
+import com.muelpatmore.cartooncharacters.data.network.models.CharacterModel;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * An activity representing a single Item detail screen. This
@@ -22,14 +29,15 @@ import org.greenrobot.eventbus.EventBus;
  */
 public class ItemDetailActivity extends AppCompatActivity {
 
+    private String name = null;
+    private CharacterModel character = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
-
-        EventBus.getDefault().register(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +97,5 @@ public class ItemDetailActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
     }
 }
