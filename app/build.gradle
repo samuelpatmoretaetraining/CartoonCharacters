@@ -22,13 +22,16 @@ android {
         simpsons {
             dimension "mhdp"
             applicationId "com.muelpatmore.cartooncharacters.simpsons"
-            buildConfigField 'String', 'app_name', '"Futurama characters"'
+            buildConfigField 'String', 'app_name', '"Simpsons Characters"'
+            buildConfigField 'String', 'database_term', '"simpsons"'
+
             buildConfigField 'String', 'version_name', '"0.1.0"'
         }
         futurama {
             dimension "mhdp"
             applicationId "com.muelpatmore.cartooncharacters.futurama"
-            buildConfigField 'String', 'app_name', '"Futurama characters"'
+            buildConfigField 'String', 'app_name', '"Futurama Characters"'
+            buildConfigField 'String', 'database_name', '"futurama"'
             buildConfigField 'String', 'version_name', '"0.1.0"'
         }
     }
@@ -43,4 +46,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    /// Retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+
+    // JSON Parsing
+    compile 'com.google.code.gson:gson:2.6.1'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    // recyclerview
+    compile 'com.android.support:recyclerview-v7:26.1.0'
 }
