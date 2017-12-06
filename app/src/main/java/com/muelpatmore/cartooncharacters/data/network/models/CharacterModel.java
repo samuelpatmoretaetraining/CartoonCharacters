@@ -19,6 +19,9 @@ public class CharacterModel {
     @Expose
     private String firstURL;
 
+
+
+
     public String getText() {
         return text;
     }
