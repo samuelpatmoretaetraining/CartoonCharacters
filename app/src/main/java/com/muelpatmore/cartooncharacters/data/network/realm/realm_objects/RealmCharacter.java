@@ -1,5 +1,7 @@
 package com.muelpatmore.cartooncharacters.data.network.realm.realm_objects;
 
+import com.muelpatmore.cartooncharacters.data.network.models.Character;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -21,13 +23,13 @@ public class RealmCharacter extends RealmObject {
     public RealmCharacter() {
     }
 
-    public RealmCharacter(CharacterModel characterModel) {
-        this.text = characterModel.getText();
+    public RealmCharacter(Character character) {
+        this.text = character.getText();
         this.name = text.substring(0, text.indexOf("-"));
-        this.firstURL = characterModel.getFirstURL();
-        this.iconURL = characterModel.getCharacterIcon().getURL();
-        this.iconWidth = characterModel.getCharacterIcon().getWidth();
-        this.iconHeight = characterModel.getCharacterIcon().getHeight();
+        this.firstURL = character.getFirstURL();
+        this.iconURL = character.getIcon().getURL();
+        this.iconWidth = character.getIcon().getWidth();
+        this.iconHeight = character.getIcon().getHeight();
     }
 
     public RealmCharacter(String name, String text, String firstURL, String iconURL, String iconWidth, String iconHeight) {

@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.muelpatmore.cartooncharacters.data.DataManager;
 import com.muelpatmore.cartooncharacters.data.event_bus.CharacterListReady;
 import com.muelpatmore.cartooncharacters.data.event_bus.CharacterSelected;
-import com.muelpatmore.cartooncharacters.dummy.DummyContent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -52,7 +51,9 @@ public class ItemListActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
+        toolbar.setTitle(BuildConfig.application_name);
+        if (getActionBar() != null) getActionBar().setTitle(BuildConfig.application_name);
+        if (getSupportActionBar() != null) getSupportActionBar().setTitle(BuildConfig.application_name);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

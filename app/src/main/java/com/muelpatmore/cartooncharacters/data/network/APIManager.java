@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.muelpatmore.cartooncharacters.data.event_bus.CharacterDetailsReady;
 import com.muelpatmore.cartooncharacters.data.event_bus.CharacterListReady;
+import com.muelpatmore.cartooncharacters.data.network.models.Character;
+import com.muelpatmore.cartooncharacters.data.network.models.CharacterList;
 import com.muelpatmore.cartooncharacters.data.network.network_utils.RequestInterface;
 import com.muelpatmore.cartooncharacters.data.network.network_utils.SchedulerProvider;
 import com.muelpatmore.cartooncharacters.data.network.network_utils.SchedulerProviderInterface;
@@ -57,11 +59,11 @@ public class APIManager
      * which is Posted by as an EventBus CharacterListReady object.
      * @param characterListModel
      */
-    private void cropNames(CharacterListModel characterListModel) {
+    private void cropNames(CharacterList characterListModel) {
         io.reactivex.Observable.just(characterListModel)
-                .map(CharacterListModel::getCharacterModels)
+                .map(CharacterList::getCharacter)
                 .flatMapIterable(x -> x)
-                .map(CharacterModel::getText)
+                .map(Character::getText)
                 .toList()
                 .observeOn(schedulerProvider.ui())
                 .subscribeOn(schedulerProvider.computation())
@@ -84,9 +86,8 @@ public class APIManager
                 request.getCharacterList()
                         .observeOn(schedulerProvider.ui())
                         .subscribeOn(schedulerProvider.io())
-                        .subscribe(characterList -> {
-                            cropCharacter(characterList, name);
-                        }, Throwable::printStackTrace)
+                        .subscribe(characterList -> cropCharacter(characterList, name),
+                                Throwable::printStackTrace)
         );
     }
 
@@ -95,9 +96,9 @@ public class APIManager
      * the character with the same name, which is then Posted in an EventBus CharacterDetailReady
      * object.
      */
-    private void cropCharacter(CharacterListModel characterListModel, String name) {
-        io.reactivex.Observable.just(characterListModel)
-                .map(CharacterListModel::getCharacterModels)
+    private void cropCharacter(CharacterList characterList, String name) {
+        io.reactivex.Observable.just(characterList)
+                .map(CharacterList::getCharacter)
                 .flatMapIterable(x -> x)
                 .filter( x -> x.getText().startsWith(name))
                 .observeOn(schedulerProvider.ui())

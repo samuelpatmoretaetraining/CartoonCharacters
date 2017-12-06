@@ -1,6 +1,7 @@
 package com.muelpatmore.cartooncharacters.data.network.network_utils;
 
 import com.muelpatmore.cartooncharacters.BuildConfig;
+import com.muelpatmore.cartooncharacters.data.network.models.CharacterList;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -12,5 +13,5 @@ import retrofit2.http.GET;
 public interface RequestInterface {
 
     @GET(BuildConfig.api_query)
-    Observable<CharacterListModel> getCharacterList();
+    Observable<CharacterList> getCharacterList();
 }

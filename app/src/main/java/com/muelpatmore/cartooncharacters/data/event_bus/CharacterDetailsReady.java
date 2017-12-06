@@ -1,13 +1,16 @@
 package com.muelpatmore.cartooncharacters.data.event_bus;
 
+import com.muelpatmore.cartooncharacters.data.network.models.Character;
+import com.muelpatmore.cartooncharacters.data.network.models.CharacterList;
+
 /**
  * Created by Samuel on 05/12/2017.
  */
 
 public class CharacterDetailsReady {
-    public CharacterModel character;
+    public Character character;
 
-    public CharacterDetailsReady(CharacterModel character) {
+    public CharacterDetailsReady(Character character) {
         this.character = character;
     }
 }

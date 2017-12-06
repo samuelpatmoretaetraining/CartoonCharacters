@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
+import com.muelpatmore.cartooncharacters.data.network.models.Character;
+
 /**
  * An activity representing a single Item detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
@@ -19,7 +21,7 @@ import android.view.MenuItem;
 public class ItemDetailActivity extends AppCompatActivity {
 
     private String name = null;
-    private CharacterModel character = null;
+    private Character character = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

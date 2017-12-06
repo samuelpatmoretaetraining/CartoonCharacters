@@ -8,7 +8,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Characters {
+public class CharacterList {
 
     @SerializedName("Type")
     @Expose
@@ -36,7 +36,7 @@ public class Characters {
     private String answerType;
     @SerializedName("RelatedTopics")
     @Expose
-    private List<RelatedTopic> relatedTopics = null;
+    private List<Character> character = null;
     @SerializedName("Definition")
     @Expose
     private String definition;
@@ -138,12 +138,12 @@ public class Characters {
         this.answerType = answerType;
     }
 
-    public List<RelatedTopic> getRelatedTopics() {
-        return relatedTopics;
+    public List<Character> getCharacter() {
+        return character;
     }
 
-    public void setRelatedTopics(List<RelatedTopic> relatedTopics) {
-        this.relatedTopics = relatedTopics;
+    public void setCharacter(List<Character> character) {
+        this.character = character;
     }
 
     public String getDefinition() {

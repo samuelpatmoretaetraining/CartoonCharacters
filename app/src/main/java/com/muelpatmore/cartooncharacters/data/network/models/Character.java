@@ -7,7 +7,7 @@ package com.muelpatmore.cartooncharacters.data.network.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RelatedTopic {
+public class Character {
 
     @SerializedName("Icon")
     @Expose
