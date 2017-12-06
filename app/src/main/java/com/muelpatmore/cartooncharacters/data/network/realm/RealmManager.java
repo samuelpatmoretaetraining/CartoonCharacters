@@ -20,7 +20,25 @@ public class RealmManager {
         this.realm = realm;
     }
 
-    public void putCharacterList(List<String> names) {
+    public void putCharacterName(String name) {
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(new RealmCharacterName(name));
+        realm.commitTransaction();
+    }
+
+    public String getCharacterName(String name) {
+        RealmCharacterName result =
+                realm.where(RealmCharacterName.class)
+                .equalTo("name", name)
+                .findFirst();
+        if (result != null) {
+            return result.getName();
+        } else {
+            return null;
+        }
+    }
+
+    public void putCharacterNameList(List<String> names) {
         realm.beginTransaction();
         List<RealmCharacterName> realmNames= new ArrayList<>();
         for(String s : names) {
