@@ -1,11 +1,5 @@
 package com.muelpatmore.cartooncharacters.data.network.realm.realm_objects;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-import com.muelpatmore.cartooncharacters.data.network.models.CharacterIcon;
-import com.muelpatmore.cartooncharacters.data.network.models.CharacterListModel;
-import com.muelpatmore.cartooncharacters.data.network.models.CharacterModel;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 

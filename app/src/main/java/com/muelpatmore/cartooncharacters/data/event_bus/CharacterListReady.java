@@ -1,7 +1,5 @@
 package com.muelpatmore.cartooncharacters.data.event_bus;
 
-import com.muelpatmore.cartooncharacters.data.network.models.CharacterModel;
-
 import java.util.ArrayList;
 
 /**

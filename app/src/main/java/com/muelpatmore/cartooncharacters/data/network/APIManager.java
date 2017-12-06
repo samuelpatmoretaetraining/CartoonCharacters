@@ -2,11 +2,8 @@ package com.muelpatmore.cartooncharacters.data.network;
 
 import android.util.Log;
 
-import com.muelpatmore.cartooncharacters.BuildConfig;
 import com.muelpatmore.cartooncharacters.data.event_bus.CharacterDetailsReady;
 import com.muelpatmore.cartooncharacters.data.event_bus.CharacterListReady;
-import com.muelpatmore.cartooncharacters.data.network.models.CharacterListModel;
-import com.muelpatmore.cartooncharacters.data.network.models.CharacterModel;
 import com.muelpatmore.cartooncharacters.data.network.network_utils.RequestInterface;
 import com.muelpatmore.cartooncharacters.data.network.network_utils.SchedulerProvider;
 import com.muelpatmore.cartooncharacters.data.network.network_utils.SchedulerProviderInterface;
