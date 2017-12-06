@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
+import com.muelpatmore.cartooncharacters.data.network.models.Character;
+
 /**
  * An activity representing a single Item detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
@@ -17,6 +19,9 @@ import android.view.MenuItem;
  * in a {@link ItemListActivity}.
  */
 public class ItemDetailActivity extends AppCompatActivity {
+
+    private String name = null;
+    private Character character = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                     .add(R.id.item_detail_container, fragment)
                     .commit();
         }
+
     }
 
     @Override
@@ -77,5 +83,10 @@ public class ItemDetailActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 }
