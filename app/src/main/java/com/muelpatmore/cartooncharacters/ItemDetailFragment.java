@@ -40,6 +40,7 @@ public class ItemDetailFragment extends Fragment {
         EventBus.getDefault().register(this);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +65,7 @@ public class ItemDetailFragment extends Fragment {
         item_detail.setText(event.character.getText());
     }
 
-
+    /** {@inheritDoc} */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,6 +82,9 @@ public class ItemDetailFragment extends Fragment {
     }
 
 
+    /** {@inheritDoc}
+     * Note: also unregisters from EventBus.
+     */
     @Override
     public void onStop() {
         super.onStop();

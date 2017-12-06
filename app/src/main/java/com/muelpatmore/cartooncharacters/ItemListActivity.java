@@ -107,6 +107,7 @@ public class ItemListActivity extends AppCompatActivity {
                         mParentActivity.getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.item_detail_container, fragment)
                                 .commit();
+                        EventBus.getDefault().post(new CharacterSelected(item));
                     } else {
                         Context context = view.getContext();
                         Intent intent = new Intent(context, ItemDetailActivity.class);
@@ -129,6 +130,7 @@ public class ItemListActivity extends AppCompatActivity {
             mTwoPane = twoPane;
         }
 
+        /** {@inheritDoc} */
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
@@ -136,6 +138,7 @@ public class ItemListActivity extends AppCompatActivity {
             return new ViewHolder(view);
         }
 
+        /** {@inheritDoc} */
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             String itemText = mValues.get(position);
@@ -143,6 +146,7 @@ public class ItemListActivity extends AppCompatActivity {
             holder.view.setOnClickListener(mOnClickListener);
         }
 
+        /** {@inheritDoc} */
         @Override
         public int getItemCount() {
             return mValues.size();
