@@ -31,40 +31,54 @@ public class APIManager {
     private CompositeDisposable compositeDisposable;
     private SchedulerProviderInterface schedulerProvider;
 
+    /**
+     * Constructor for API manager.
+     */
     public APIManager() {
         this.request = ServerConnectionManager.getServerConnection();
         this.compositeDisposable = new CompositeDisposable();
         this.schedulerProvider = new SchedulerProvider();
     }
 
+    /**
+     * Queries the API and Posts an ArrayList of name strings in an EventBus CharacterListReady
+     * object.
+     */
     public void getCharacterList() {
         compositeDisposable.add(
                 request.getCharacterList()
                         .observeOn(schedulerProvider.ui())
                         .subscribeOn(schedulerProvider.io())
-                        .subscribe(characterList -> {
-                            cropNames(characterList);
-                        }, throwable -> throwable.printStackTrace())
+                        .subscribe(this::cropNames, Throwable::printStackTrace)
         );
     }
 
-
-
-    public void cropNames(CharacterListModel characterListModel) {
+    /**
+     * Utility function to trim raw API data of all characters to an array list of their names,
+     * which is Posted by as an EventBus CharacterListReady object.
+     * @param characterListModel
+     */
+    private void cropNames(CharacterListModel characterListModel) {
         io.reactivex.Observable.just(characterListModel)
-                .map(x -> x.getCharacterModels())
+                .map(CharacterListModel::getCharacterModels)
                 .flatMapIterable(x -> x)
-                .map(x -> x.getText())
+                .map(CharacterModel::getText)
                 .toList()
                 .observeOn(schedulerProvider.ui())
                 .subscribeOn(schedulerProvider.computation())
                 .subscribe(names -> {
+                    Log.i(TAG, names.toString());
                         EventBus.getDefault().post(
                                 new CharacterListReady(
                                         new ArrayList<>(names)));}
-                , throwable -> throwable.printStackTrace());
+                , Throwable::printStackTrace);
     }
 
+    /**
+     * Queries the API and Posts a CharacterListModel of the character with the same name in an
+     * EventBus CharacterDetailReady object.
+     * object.
+     */
     public void getCharacterDetails(String name) {
         compositeDisposable.add(
                 request.getCharacterList()
@@ -72,43 +86,25 @@ public class APIManager {
                         .subscribeOn(schedulerProvider.io())
                         .subscribe(characterList -> {
                             cropCharacter(characterList, name);
-                        }, throwable -> throwable.printStackTrace())
+                        }, Throwable::printStackTrace)
         );
     }
 
-
-
+    /**
+     * Utility function to trim raw API data of all characters to a single CharacterListModel of
+     * the character with the same name, which is then Posted in an EventBus CharacterDetailReady
+     * object.
+     */
     public void cropCharacter(CharacterListModel characterListModel, String name) {
         io.reactivex.Observable.just(characterListModel)
-                .map(x -> x.getCharacterModels())
+                .map(CharacterListModel::getCharacterModels)
                 .flatMapIterable(x -> x)
-                .filter( x -> {
-                    return x.getText().startsWith(name);
-                })
+                .filter( x -> x.getText().startsWith(name))
                 .observeOn(schedulerProvider.ui())
                 .subscribeOn(schedulerProvider.computation())
                 .subscribe(character -> {
                             EventBus.getDefault().post(
                                     new CharacterDetailsReady(character));}
-                        , throwable -> throwable.printStackTrace());
+                        , Throwable::printStackTrace);
     }
-
-//    public void getCharacterList() {
-//        compositeDisposable.add(
-//                request.getCharacterList()
-//                        .map(x -> x.getCharacterModels())
-//                        .flatMapIterable(x -> x)
-//                        .map(x -> x.getText())
-//                        .toList()
-//                        .observeOn(schedulerProvider.ui())
-//                        .subscribeOn(schedulerProvider.io())
-//                        .subscribe(characterList -> {
-//                            ArrayList<String> characterArrayList = new ArrayList<>(characterList);
-//                            for (String s : characterArrayList) {
-//                                Log.i(TAG, s);
-//                            }
-//                            EventBus.getDefault().post(new CharacterListReady(characterArrayList));
-//                        }, throwable -> throwable.printStackTrace())
-//        );
-//    }
 }
