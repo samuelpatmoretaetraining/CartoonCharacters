@@ -23,7 +23,8 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by Samuel on 05/12/2017.
  */
 
-public class APIManager {
+public class APIManager
+        implements APIManagerInterface {
 
     private static final String TAG = "APIManager";
 
@@ -44,6 +45,7 @@ public class APIManager {
      * Queries the API and Posts an ArrayList of name strings in an EventBus CharacterListReady
      * object.
      */
+    @Override
     public void getCharacterList() {
         compositeDisposable.add(
                 request.getCharacterList()
@@ -79,6 +81,7 @@ public class APIManager {
      * EventBus CharacterDetailReady object.
      * object.
      */
+    @Override
     public void getCharacterDetails(String name) {
         compositeDisposable.add(
                 request.getCharacterList()
@@ -95,7 +98,7 @@ public class APIManager {
      * the character with the same name, which is then Posted in an EventBus CharacterDetailReady
      * object.
      */
-    public void cropCharacter(CharacterListModel characterListModel, String name) {
+    private void cropCharacter(CharacterListModel characterListModel, String name) {
         io.reactivex.Observable.just(characterListModel)
                 .map(CharacterListModel::getCharacterModels)
                 .flatMapIterable(x -> x)
