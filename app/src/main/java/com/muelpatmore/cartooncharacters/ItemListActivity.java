@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.muelpatmore.cartooncharacters.data.DataManager;
 import com.muelpatmore.cartooncharacters.data.event_bus.CharacterListReady;
 import com.muelpatmore.cartooncharacters.data.event_bus.CharacterSelected;
+import com.squareup.leakcanary.LeakCanary;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

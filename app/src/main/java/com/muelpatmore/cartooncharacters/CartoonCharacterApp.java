@@ -3,6 +3,8 @@ package com.muelpatmore.cartooncharacters;
 import android.app.Application;
 import android.content.Context;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -18,6 +20,7 @@ public class CartoonCharacterApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
         instance = this;
         mContext = this.getApplicationContext();
 
