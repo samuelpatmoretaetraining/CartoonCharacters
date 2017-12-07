@@ -1,5 +1,6 @@
 package com.muelpatmore.cartooncharacters.data.realm;
 
+import com.muelpatmore.cartooncharacters.data.CharacterInterface;
 import com.muelpatmore.cartooncharacters.data.network.models.Character;
 import com.muelpatmore.cartooncharacters.data.network.models.Icon;
 import com.muelpatmore.cartooncharacters.data.realm.realm_objects.RealmCharacter;
@@ -61,18 +62,18 @@ public class RealmManager {
         return names;
     }
 
-    public void storeCharacter(RealmCharacter character) {
+    public void storeCharacter(CharacterInterface character) {
         realm.beginTransaction();
-        realm.copyToRealmOrUpdate(character);
+        realm.copyToRealmOrUpdate(new RealmCharacter(character));
         realm.commitTransaction();
     }
 
 
-    public void storeCharacter(String name, Icon icon, String firstURL, String text, String result) {
+    public void storeCharacter(String name, String icon, String firstURL, String text, String result) {
         storeCharacter(new RealmCharacter(name, icon, firstURL, text, result));
     }
 
-    public void storeCharacter(Icon icon, String firstURL, String text, String result) {
+    public void storeCharacter(String icon, String firstURL, String text, String result) {
         storeCharacter(new RealmCharacter(icon, firstURL, text, result));
     }
 }

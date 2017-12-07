@@ -6,8 +6,9 @@ package com.muelpatmore.cartooncharacters.data.network.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.muelpatmore.cartooncharacters.data.CharacterInterface;
 
-public class Character {
+public class Character implements CharacterInterface {
 
     @SerializedName("Icon")
     @Expose
@@ -36,6 +37,19 @@ public class Character {
 
     public void setFirstURL(String firstURL) {
         this.firstURL = firstURL;
+    }
+
+    @Override
+    public String getIconURL() {
+        return getIcon().getURL();
+    }
+
+    @Override
+    public String getName() {
+        if (text.contains("-")) {
+            return text.substring(0, text.indexOf("-") - 2);
+        }
+        return null;
     }
 
     public String getText() {
