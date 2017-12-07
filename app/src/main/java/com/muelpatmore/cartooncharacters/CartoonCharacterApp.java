@@ -3,7 +3,6 @@ package com.muelpatmore.cartooncharacters;
 import android.app.Application;
 import android.content.Context;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
@@ -19,8 +18,6 @@ public class CartoonCharacterApp extends Application {
     public void onCreate() {
         super.onCreate();
         LeakCanary.install(this);
-
-        Fresco.initialize(this);
 
         Realm.init(this.getApplicationContext());
         RealmConfiguration realmConfig = new RealmConfiguration.Builder()

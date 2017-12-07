@@ -43,6 +43,7 @@ public class ItemListActivity extends AppCompatActivity {
     private boolean mTwoPane;
     private RecyclerView recyclerView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +81,11 @@ public class ItemListActivity extends AppCompatActivity {
         assert recyclerView != null;
     }
 
+    /**
+     * Subscribe to EventBus message class sent over main thread to signal a new list of character
+     * names is ready to be displayed in the recycler view. Which is then done.
+     * @param event CharacterListReady POJO containing the list of character names.
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(CharacterListReady event) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, event.characterList, mTwoPane));

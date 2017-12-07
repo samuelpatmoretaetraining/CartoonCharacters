@@ -1,4 +1,4 @@
-package com.muelpatmore.cartooncharacters.data.network.realm.realm_objects;
+package com.muelpatmore.cartooncharacters.data.realm.realm_objects;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

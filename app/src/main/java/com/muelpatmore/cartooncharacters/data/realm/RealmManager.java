@@ -1,6 +1,9 @@
-package com.muelpatmore.cartooncharacters.data.network.realm;
+package com.muelpatmore.cartooncharacters.data.realm;
 
-import com.muelpatmore.cartooncharacters.data.network.realm.realm_objects.RealmCharacterName;
+import com.muelpatmore.cartooncharacters.data.network.models.Character;
+import com.muelpatmore.cartooncharacters.data.network.models.Icon;
+import com.muelpatmore.cartooncharacters.data.realm.realm_objects.RealmCharacter;
+import com.muelpatmore.cartooncharacters.data.realm.realm_objects.RealmCharacterName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +32,8 @@ public class RealmManager {
     public String getCharacterName(String name) {
         RealmCharacterName result =
                 realm.where(RealmCharacterName.class)
-                .equalTo("name", name)
-                .findFirst();
+                        .equalTo("name", name)
+                        .findFirst();
         if (result != null) {
             return result.getName();
         } else {
@@ -40,8 +43,8 @@ public class RealmManager {
 
     public void putCharacterNameList(List<String> names) {
         realm.beginTransaction();
-        List<RealmCharacterName> realmNames= new ArrayList<>();
-        for(String s : names) {
+        List<RealmCharacterName> realmNames = new ArrayList<>();
+        for (String s : names) {
             realmNames.add(new RealmCharacterName(s));
         }
         realm.copyToRealmOrUpdate(realmNames);
@@ -52,9 +55,24 @@ public class RealmManager {
         RealmResults<RealmCharacterName> realmResults =
                 realm.where(RealmCharacterName.class).findAll();
         ArrayList<String> names = new ArrayList<>();
-        for(RealmCharacterName name : realmResults) {
+        for (RealmCharacterName name : realmResults) {
             names.add(name.getName());
         }
         return names;
+    }
+
+    public void storeCharacter(RealmCharacter character) {
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(character);
+        realm.commitTransaction();
+    }
+
+
+    public void storeCharacter(String name, Icon icon, String firstURL, String text, String result) {
+        storeCharacter(new RealmCharacter(name, icon, firstURL, text, result));
+    }
+
+    public void storeCharacter(Icon icon, String firstURL, String text, String result) {
+        storeCharacter(new RealmCharacter(icon, firstURL, text, result));
     }
 }

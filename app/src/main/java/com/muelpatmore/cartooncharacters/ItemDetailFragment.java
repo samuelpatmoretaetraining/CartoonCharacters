@@ -1,17 +1,18 @@
 package com.muelpatmore.cartooncharacters;
 
 import android.app.Activity;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.muelpatmore.cartooncharacters.data.DataManager;
 import com.muelpatmore.cartooncharacters.data.event_bus.CharacterDetailsReady;
-import com.muelpatmore.cartooncharacters.data.event_bus.CharacterListReady;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,7 +28,8 @@ public class ItemDetailFragment extends Fragment {
 
     private DataManager dataManager;
 
-    private TextView item_detail;
+    private TextView tvName, tvText;
+    private ImageView ivIcon;
     public static final String ARG_ITEM_ID = "item_id";
     private String name;
 
@@ -40,7 +42,10 @@ public class ItemDetailFragment extends Fragment {
         EventBus.getDefault().register(this);
     }
 
-    /** {@inheritDoc} */
+    /** {@inheritDoc}
+     * Note: takes arguments and displays teh selected character's name as a page title before
+     * querying the DatabaseManager for complete information to display.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +65,18 @@ public class ItemDetailFragment extends Fragment {
         }
     }
 
+    /**
+     * Subscribe to EventBus message class sent over main thread, signaling the details of a
+     * selected character is ready to be displayed in the detail fragment. Which is then done.
+     * @param event CharacterDetailsReady POJO containing the list of character's details.
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(CharacterDetailsReady event) {
-        item_detail.setText(event.character.getText());
+        String text = event.character.getText();
+        tvName.setText(text.substring(0, text.indexOf("-")-1));
+        tvText.setText(text.substring(text.indexOf("-")+1));
+
+        Picasso.with(this.getContext()).load(event.character.getIcon().getURL()).into(ivIcon);
     }
 
     /** {@inheritDoc} */
@@ -71,11 +85,12 @@ public class ItemDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.item_detail, container, false);
 
-        item_detail = (TextView) rootView.findViewById(R.id.item_detail);
+        tvName = (TextView) rootView.findViewById(R.id.tvName);
+        tvText = (TextView) rootView.findViewById(R.id.tvText);
+        ivIcon = (ImageView) rootView.findViewById(R.id.ivIcon);
 
-        // Show the dummy content as text in a TextView.
         if (name != null) {
-            item_detail.setText(name);
+            tvName.setText(name);
         }
 
         return rootView;
